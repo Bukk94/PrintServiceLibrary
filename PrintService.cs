@@ -573,12 +573,12 @@
         /// <summary>
         /// Generates printer commands from XML Label template
         /// </summary>
-        /// <param name="xml"></param>
-        /// <param name="language"></param>
-        /// <param name="dpi"></param>
-        /// <param name="dataSource"></param>
-        /// <param name="usePrintersRAM"></param>
-        /// <returns></returns>
+        /// <param name="xml">XML template  containing all label data</param>
+        /// <param name="language">Target language to generate</param>
+        /// <param name="dpi">Target DPI resolution</param>
+        /// <param name="dataSource">Data source for binding</param>
+        /// <param name="usePrintersRAM">Use printer's RAM to load objects?</param>
+        /// <returns>Returns string commands in specified language (e.g. ZPL)</returns>
         private string GeneratePrinterCommandsFromXml(string xml, PrintServiceLibrary.ProgrammingLanguage language, int dpi, object dataSource, bool usePrintersRAM)
         {
             return this._neodynamicWrapper.GeneratePrinterCommandsFromXml(xml, language, dpi, dataSource, usePrintersRAM);
