@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="EmptyPrintCommands" xml:space="preserve">
+    <value>Tiskové příkazy jsou prázdné.</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Chyba</value>
+  </data>
+  <data name="ErrorConnectToDesignatedPrinter" xml:space="preserve">
+    <value>Nelze se připojit k vybrané tiskárně</value>
+  </data>
+  <data name="ErrorOccured" xml:space="preserve">
+    <value>Nastala chyba</value>
+  </data>
+  <data name="ErrorOccuredDuringPrinting" xml:space="preserve">
+    <value>Nastala chyba během tisku. Chybový kód</value>
+  </data>
+  <data name="ErrorReadPrinterAttempt" xml:space="preserve">
+    <value>Nastala chyba při čtení dat tiskárny</value>
+  </data>
+  <data name="InvalidSerialData" xml:space="preserve">
+    <value>Název sériového portu, přenosová rychlost nebo datové bity jsou v neplatném formátu</value>
+  </data>
+  <data name="InvalidStopBits" xml:space="preserve">
+    <value>Hodnota None není platná pro Stop Bity</value>
+  </data>
+  <data name="IOException" xml:space="preserve">
+    <value>Vstupní/výstupní chyba</value>
+  </data>
+  <data name="NoCommandToExecute" xml:space="preserve">
+    <value>Žádný příkaz k provedení</value>
+  </data>
+  <data name="NoIpAddressOrPort" xml:space="preserve">
+    <value>IP adresa nebo síťový port není zadán</value>
+  </data>
+  <data name="NoUsbPrinterFound" xml:space="preserve">
+    <value>Zadaná USB tiskárna nebyla nalezena</value>
+  </data>
+  <data name="NoXMLTemplate" xml:space="preserve">
+    <value>Žádná šablona XML</value>
+  </data>
+  <data name="PritnerNameEmpty" xml:space="preserve">
+    <value>Nebyl zadán název tiskárny</value>
+  </data>
+  <data name="ReadError" xml:space="preserve">
+    <value>Chyba čtení</value>
+  </data>
+  <data name="ReadRequestTimeOut" xml:space="preserve">
+    <value>Žádost o čtení tiskárny vypršela</value>
+  </data>
+  <data name="WriteError" xml:space="preserve">
+    <value>Chyba zápisu</value>
+  </data>
+  <data name="AccessRegistryKey" xml:space="preserve">
+    <value>Nelze získat přístup k určitému klíči registru</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Chybová zpráva</value>
+  </data>
+  <data name="InvalidLptPortName" xml:space="preserve">
+    <value>Neplatný název LPT portu</value>
+  </data>
+  <data name="PrintError" xml:space="preserve">
+    <value>Nastala chyba při tisku</value>
+  </data>
+  <data name="ZebraConnectionFailed" xml:space="preserve">
+    <value>Selhalo připojení k tiskárně Zebra</value>
+  </data>
+  <data name="BindingFailure" xml:space="preserve">
+    <value>Selhání vázání dat</value>
+  </data>
+  <data name="CannotBindToEmptyTemplate" xml:space="preserve">
+    <value>Nelze vázat data na prázdnou {0} šablonu</value>
+  </data>
+  <data name="CannotBindToEmptyZPLTemplate" xml:space="preserve">
+    <value>Nelze vázat data na prázdnou ZPL šablonu</value>
+  </data>
+  <data name="CannotDeserializeEmptyJson" xml:space="preserve">
+    <value>Nelze deserializovat prázdný JSON</value>
+  </data>
+  <data name="DataSourceIsNull" xml:space="preserve">
+    <value>Chybí zdroj dat</value>
+  </data>
+  <data name="EmptyQuery" xml:space="preserve">
+    <value>Prázdný dotaz</value>
+  </data>
+  <data name="InvalidConnectionString" xml:space="preserve">
+    <value>Neplatný databázový connection string</value>
+  </data>
+  <data name="InvalidZPL" xml:space="preserve">
+    <value>Neplatná struktura ZPL. ZPL musí začínat ^XA a končit ^XZ</value>
+  </data>
+  <data name="JsonParsingError" xml:space="preserve">
+    <value>Během analýzy JSON došlo k chybě. Možná je nesprávný formát JSON?</value>
+  </data>
+  <data name="MissingDBSetting" xml:space="preserve">
+    <value>Zvolenému databázovému zdoji chybí struktura s údaji (DB Settings)!</value>
+  </data>
+  <data name="SourceContainsMoreFields" xml:space="preserve">
+    <value>Zdroj obsahuje víc položek pro vázání dat než je datových položek</value>
+  </data>
+  <data name="SourceOrDataMissing" xml:space="preserve">
+    <value>Zdroj nebo data chybí</value>
+  </data>
+  <data name="MissingDBSettingStructure" xml:space="preserve">
+    <value>Vybraný zdroj (databáze) nemá v datech DB Settings strukturu!</value>
+  </data>
+  <data name="InvalidXML" xml:space="preserve">
+    <value>XML není validní</value>
+  </data>
+</root>
