@@ -1,0 +1,36 @@
+﻿namespace PrintServiceLibrary
+{
+    /// <summary>
+    /// Enum with hex values for system file creation used in USB and LPT printing
+    /// </summary>
+    internal enum EFileAttributes : uint
+    {
+        FILE_ATTRIBUTE_READONLY = 0x1,
+        FILE_ATTRIBUTE_HIDDEN = 0x2,
+        FILE_ATTRIBUTE_SYSTEM = 0x4,
+        FILE_ATTRIBUTE_DIRECTORY = 0x10,
+        FILE_ATTRIBUTE_ARCHIVE = 0x20,
+        FILE_ATTRIBUTE_DEVICE = 0x40,
+        FILE_ATTRIBUTE_NORMAL = 0x80,
+        FILE_ATTRIBUTE_TEMPORARY = 0x100,
+        FILE_ATTRIBUTE_SPARSE_FILE = 0x200,
+        FILE_ATTRIBUTE_REPARSE_POINT = 0x400,
+        FILE_ATTRIBUTE_COMPRESSED = 0x800,
+        FILE_ATTRIBUTE_OFFLINE = 0x1000,
+        FILE_ATTRIBUTE_NOT_CONTENT_INDEXED = 0x2000,
+        FILE_ATTRIBUTE_ENCRYPTED = 0x4000,
+        FILE_ATTRIBUTE_VIRTUAL = 0x10000,
+
+        // This parameter can also contain combinations of flags (FILE_FLAG_*) 
+        FILE_FLAG_BACKUP_SEMANTICS = 0x2000000,
+        FILE_FLAG_DELETE_ON_CLOSE = 0x4000000,
+        FILE_FLAG_NO_BUFFERING = 0x20000000,
+        FILE_FLAG_OPEN_NO_RECALL = 0x100000,
+        FILE_FLAG_OPEN_REPARSE_POINT = 0x200000,
+        FILE_FLAG_OVERLAPPED = 0x40000000,
+        FILE_FLAG_POSIX_SEMANTICS = 0x1000000,
+        FILE_FLAG_RANDOM_ACCESS = 0x10000000,
+        FILE_FLAG_SEQUENTIAL_SCAN = 0x8000000,
+        FILE_FLAG_WRITE_THROUGH = 0x80000000
+    }
+}
