@@ -1,24 +1,24 @@
 ﻿# Print service library (PSL)
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
-[![GitHub Release](https://img.shields.io/github/release/Bukk94/PrintServiceLibrary.svg?style=flat)]()  
+![version](https://img.shields.io/badge/version-1.0-blue) 
 [![Build Status](https://travis-ci.com/Bukk94/PrintServiceLibrary.svg?token=XTeWt6KEyExzbH1iNFWD&branch=master)](https://travis-ci.com/Bukk94/PrintServiceLibrary)
 
-This library servers as interface into printer's communication. 
-User is able to communicate with various connection interfaces using single API interface.
+This library servers as an interface into printer's communication. 
+The user can communicate with various connection interfaces using a single API interface.
 
-API is able to communicate using:
+API can communicate using:
 - USB port
 - LPT (Parallel port)
 - COM (Serial port)
 - Network connection (TCP/IP)
 
-PSL was mainly developed for Zebra printers using ZPL language. 
-But basic communication interface should work with any kind of printer and language as long as you follow standard printer's structure and langauge.
+PSL was mainly developed for Zebra printers using the ZPL language. 
+But basic communication interface should work with any kind of printer and language as long as you follow standard printer's structure and language.
 
 ### ZPL dependant methods
 
-These methods are only for printers that supports ZPL language.
+These methods are only for printers that support the ZPL language.
 - `UploadFontToPrinter`
 - `ListPrinterMemory`
 - `GetPrinterFreeMemory`
@@ -26,7 +26,7 @@ These methods are only for printers that supports ZPL language.
 
 # Code Examples
 
-## Printing using USB port
+## Printing using the USB port
 
 ```csharp
 string zplCommands = "^XA^FO100,153^FDTest Text to Print^FS^XZ";
@@ -55,17 +55,25 @@ IPrintService printService = new PrintService();
 printService.LoadInstalledPrinters();
 ```
 
-## Neodynamic integration
+# Neodynamic integration
 
 PSL API has [Neodynamic ThermalLabel SDK](https://www.neodynamic.com/products/printing/thermal-label/sdk-vb-net-csharp/download/) 
-integration. If you do have Neodynamic licence key, you can pass it in 
+integration. If you do have Neodynamic license key, you can pass it in 
 `PrintService` constructor and call methods like `PreviewZPLPrint`.
 
-These methods further enhances Neodynamic ZPL code generation from raw XML template by locally 
-previewing ZPL commands that will get send to the printer or by local data binding without needing communication with the printer.
+These methods further enhance Neodynamic ZPL code generation from raw XML template by locally 
+previewing ZPL commands that will get sent to the printer or by local data binding without needing communication with the printer.
 
-You can use these commands regardless of Neodynamic SDK licence but beware that "TRIAL" logo will be embedded in the ZPL commands.
+You can use these commands regardless of Neodynamic SDK license but beware that the "TRIAL" logo will be embedded in the ZPL commands.
 
+# Lightweight version
+
+There is also a Lightweight version in a separate branch that doesn't contain Neodynamic ThermalLabel SDK.
+This removes all necessary libraries (which are quite large) and only provides printer communication.
+
+# Languages
+
+PSL API is multilingual. Supported languages are English and Czech.
 
 ### Licensing
 
