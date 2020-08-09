@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Print Service Library")]
-[assembly: AssemblyDescription("Provides easy API to printer connected to any sort of connection type")]
+[assembly: AssemblyDescription("Provides easy lighweight API to printer connected to any sort of connection type")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Print Service Library")]

@@ -18,28 +18,6 @@
         /// <returns>Returns <see cref="PrintResult"/> with printing details</returns>
         PrintResult Print(string printerCommands, PrintServiceLibrary.PrinterSettings printerSettings, bool waitForResponse = false);
 
-        #region XML Template printing
-        /// <summary>
-        /// Prints label template via designated printer without any binding
-        /// </summary>
-        /// <param name="xmlTemplate">XML label template containing label layout</param>
-        /// <param name="printerSettings"><see cref="PrintServiceLibrary.PrinterSettings"/> structure containing all connection details</param>
-        /// <param name="uploadUsedFonts">Should API upload used fonts to the printer memory?</param>
-        /// <returns>Returns <see cref="PrintResult"/> with printing details</returns>
-        PrintResult PrintXmlTemplate(string xmlTemplate, PrintServiceLibrary.PrinterSettings printerSettings, bool uploadUsedFonts = false);
-
-        /// <summary>
-        /// Prints label template via designated printer, including data binding
-        /// </summary>
-        /// <param name="xmlTemplate">XML label template containing label layout</param>
-        /// <param name="printerSettings"><see cref="PrintServiceLibrary.PrinterSettings"/> structure containing all connection details</param>
-        /// <param name="data">Data for data binding</param>
-        /// <param name="dataSource">Data source type defined by <see cref="DataSourceType"/></param>
-        /// <param name="uploadUsedFonts">Should API upload used fonts to the printer memory?</param>
-        /// <returns>Returns <see cref="PrintResult"/> with printing details</returns>
-        PrintResult PrintXmlTemplate(string xmlTemplate, PrintServiceLibrary.PrinterSettings printerSettings, object data, DataSourceType dataSource = DataSourceType.None, bool uploadUsedFonts = false);
-        #endregion
-
         #region Print via USB
         /// <summary>
         /// Sends commands via USB to ZEBRA printer
@@ -206,25 +184,6 @@
         /// </summary>
         /// <returns>Return list of printer names</returns>
         List<string> LoadInstalledPrinters();
-        #endregion
-
-        #region Preview ZPL
-        /// <summary>
-        /// Creates ZPL preview based on the XML label template without any data binding
-        /// </summary>
-        /// <param name="xmlTemplate">XML label template containing label layout</param>
-        /// <param name="dpi">DPI of the preview</param>
-        /// <returns>Returns <see cref="PrintResult"/> with ZPL preview in Message property</returns>
-        PrintResult PreviewZPLPrint(string xmlTemplate, double dpi);
-
-        /// <summary>
-        /// Creates ZPL preview based on the XML label template with complete data binding
-        /// </summary>
-        /// <param name="xmlTemplate">XML label template containing label layout</param>
-        /// <param name="data">Data for data binding</param>
-        /// <param name="dataSource">Data source type defined by <see cref="DataSourceType"/></param>
-        /// <returns>Returns <see cref="PrintResult"/> with ZPL preview in Message property</returns>
-        PrintResult PreviewZPLPrint(string xmlTemplate, double dpi, DataSourceType dataSource, object data);
         #endregion
     }
 }

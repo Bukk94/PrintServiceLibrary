@@ -14,31 +14,6 @@
     /// </summary>
     public class PrintService : IPrintService
     {
-        private readonly NeodynamicWrapper _neodynamicWrapper;
-        private readonly DataBinder _dataBinder;
-        private readonly DatabaseQuery _databaseQuery;
-
-        /// <summary>
-        /// Default parameterless constructor
-        /// </summary>
-        public PrintService()
-        {
-            this._neodynamicWrapper = new NeodynamicWrapper();
-            this._dataBinder = new DataBinder();
-            this._databaseQuery = new DatabaseQuery();
-        }
-
-        /// <summary>
-        /// Advanced constructor containing Neodynamic ThermalLabel SDK licenses
-        /// </summary>
-        /// <param name="NeodynamicLicence">Neodynamic ThermalLabel SDK owner and license</param>
-        public PrintService((string owner, string licence) NeodynamicLicence)
-        {
-            this._neodynamicWrapper = new NeodynamicWrapper(NeodynamicLicence.owner, NeodynamicLicence.licence);
-            this._dataBinder = new DataBinder();
-            this._databaseQuery = new DatabaseQuery();
-        }
-
         /// <summary>
         /// Sends commands to the printers specified by the printer settings structure
         /// </summary>
@@ -167,133 +142,6 @@
         }
         #endregion
 
-        #region Print XML template
-        /// <summary>
-        /// Prints label template via designated printer without any binding
-        /// </summary>
-        /// <param name="xmlTemplate">XML label template containing label layout</param>
-        /// <param name="printerSettings"><see cref="PrintServiceLibrary.PrinterSettings"/> structure containing all connection details</param>
-        /// <param name="uploadUsedFonts">Should API upload used fonts to the printer memory?</param>
-        /// <returns>Returns <see cref="PrintResult"/> with printing details</returns>
-        public PrintResult PrintXmlTemplate(string xml, PrintServiceLibrary.PrinterSettings printerSettings, bool uploadUsedFonts = false)
-        {
-            return this.PrintXmlTemplate(xml, printerSettings, null, DataSourceType.None, uploadUsedFonts);
-
-        }
-
-        /// <summary>
-        /// Prints label template via designated printer, including data binding
-        /// </summary>
-        /// <param name="xmlTemplate">XML label template containing label layout</param>
-        /// <param name="printerSettings"><see cref="PrintServiceLibrary.PrinterSettings"/> structure containing all connection details</param>
-        /// <param name="data">Data for data binding</param>
-        /// <param name="dataSource">Data source type defined by <see cref="DataSourceType"/></param>
-        /// <param name="uploadUsedFonts">Should API upload used fonts to the printer memory?</param>
-        /// <returns>Returns <see cref="PrintResult"/> with printing details</returns>
-        public PrintResult PrintXmlTemplate(string xml, PrintServiceLibrary.PrinterSettings printerSettings, object data, DataSourceType dataSource = DataSourceType.None, bool uploadUsedFonts = false)
-        {
-            PrintResult printResult = new PrintResult();
-
-            if (string.IsNullOrEmpty(xml))
-            {
-                printResult.Message = string.Format("{0} - {1}", Properties.Localization.Error, Properties.Localization.NoXMLTemplate);
-                printResult.IsSuccessful = false;
-                return printResult;
-            }
-
-            if (!Utility.IsXmlValid(xml))
-            {
-                printResult.Message = string.Format("{0} - {1}", Properties.Localization.Error, Properties.Localization.InvalidXML);
-                printResult.IsSuccessful = false;
-                return printResult;
-            }
-
-            var printerCommands = string.Empty;
-            string response = string.Empty;
-            object dataSourceValues = null;
-
-            if (uploadUsedFonts)
-            {
-                xml = this.UploadTemplateFontsToPrinter(printerSettings, xml, PrinterMemoryType.DRAM);
-            }
-            else
-            {
-                // Try to lookup all necessary fonts in printer. If one of the fonts is missing, print as graphic
-                var templateFonts = this._neodynamicWrapper.SetupTemplateFonts(xml, out string modifiedXml);
-                if (templateFonts.Count > 0 && this.CheckIfPrinterContainsFonts(printerSettings, templateFonts, PrinterMemoryType.DRAM))
-                {
-                    xml = modifiedXml;
-                }
-            }
-
-            // Binding
-            if (this.NeedsBinding(xml))
-            {
-                if (data == null)
-                {
-                    printResult.IsSuccessful = false;
-                    printResult.Message = string.Format("{0}. {1}", Properties.Localization.BindingFailure, Properties.Localization.DataSourceIsNull);
-                    return printResult;
-                }
-
-                if (dataSource == DataSourceType.Json && !string.IsNullOrEmpty(data.ToString()))
-                {
-                    var (dataSetXml, errorMessage) = this._dataBinder.BindJsonDataToDataSet(data.ToString());
-                    if (!string.IsNullOrEmpty(errorMessage))
-                    {
-                        printResult.Message = errorMessage;
-                        printResult.IsSuccessful = false;
-                        return printResult;
-                    }
-
-                    dataSourceValues = dataSetXml;
-                }
-                else if (dataSource == DataSourceType.Database)
-                {
-                    if (!(data is DatabaseSettings dbSettings))
-                    {
-                        printResult.IsSuccessful = false;
-                        printResult.Message = Properties.Localization.MissingDBSettingStructure;
-                        return printResult;
-                    }
-
-                    var (dataTable, isSuccessful, errorMessage) = this._databaseQuery.ExecuteSQL(dbSettings);
-                    if (!isSuccessful)
-                    {
-                        return new PrintResult
-                        {
-                            Message = errorMessage,
-                            IsSuccessful = false
-                        };
-                    }
-
-                    dataSourceValues = dataTable;
-                }
-                else if (dataSource == DataSourceType.Xml && !string.IsNullOrEmpty(data.ToString()))
-                {
-                    dataSourceValues = this._dataBinder.BindXmlDataToDataSet(data.ToString());
-                }
-            }
-
-            printerCommands = this.GeneratePrinterCommandsFromXml(xml, printerSettings.ProgrammingLanguage, (int)printerSettings.Dpi, dataSourceValues, printerSettings.UsePrintersRAM);
-
-            switch (printerSettings.CommunicationType)
-            {
-                case PrintServiceLibrary.CommunicationType.Network:
-                case PrintServiceLibrary.CommunicationType.Serial:
-                case PrintServiceLibrary.CommunicationType.Parallel:
-                case PrintServiceLibrary.CommunicationType.USB:
-                    printResult = this.ExecuteCommand(printerCommands, printerSettings);
-                    break;
-                default:
-                    printResult = this._neodynamicWrapper.Print(xml, printerSettings, dataSourceValues);
-                    break;
-            }
-
-            return printResult;
-        }
-        #endregion
-
         #region Printer Utilities
         /// <summary>
         /// Uploads selected font into printer's memory
@@ -382,117 +230,6 @@
         }
         #endregion
 
-        #region Print Previews
-        /// <summary>
-        /// Generates ZPL preview based on XML Label Template
-        /// </summary>
-        public PrintResult PreviewZPLPrint(string xmlTemplate, double dpi)
-        {
-            return this.PreviewLocalZPLPrint(xmlTemplate, dpi, DataSourceType.None, null);
-        }
-
-        public PrintResult PreviewZPLPrint(string xmlTemplate, double dpi, DataSourceType dataSource, object data)
-        {
-            return this.PreviewLocalZPLPrint(xmlTemplate, dpi, dataSource, data);
-        }
-        #endregion
-
-        /// <summary>
-        /// Binds dynamic values as constants for preview purpose
-        /// </summary>
-        /// <param name="xml">XML Label template layout</param>
-        /// <returns>Returns modified XML label template with binded constants</returns>
-        private string BindDynamicValuesAsConstants(string xml)
-        {
-            string pattern = "DataField=\"(.*?)\"";
-
-            if (Regex.IsMatch(xml, pattern))
-            {
-                var matchCollection = Regex.Matches(xml, pattern);
-                List<string> tags = new List<string>();
-
-                foreach (Match match in matchCollection)
-                {
-                    tags.Add(match.Groups[1].Value);
-                }
-
-                tags.RemoveAll(x => string.IsNullOrEmpty(x));
-                xml = this._dataBinder.ReplaceDataFieldsByValuesInXml(xml, tags, tags);
-            }
-
-            return xml;
-        }
-
-        /// <summary>
-        /// Creates ZPL Preview based on XML Label template
-        /// </summary>
-        /// <param name="xmlTemplate">XML Label template with label layout</param>
-        /// <param name="dpi">DPI of the output preview</param>
-        /// <param name="dataSource">Data source type defined by <see cref="DataSourceType"/></param>
-        /// <param name="data">Data source for data binding fields</param>
-        /// <returns>Returns results of the preview, if successfull, ZPL preview string is in Message property</returns>
-        private PrintResult PreviewLocalZPLPrint(string xmlTemplate, double dpi, DataSourceType dataSource, object data)
-        {
-            PrintResult printResult = new PrintResult();
-
-            if (!Utility.IsXmlValid(xmlTemplate))
-            {
-                printResult.Message = string.Format("{0} - {1}", Properties.Localization.Error, Properties.Localization.InvalidXML);
-                printResult.IsSuccessful = false;
-                return printResult;
-            }
-
-            this._neodynamicWrapper.SetupTemplateFonts(xmlTemplate, out string modifiedXml);
-
-            string zplPrinterCommands = this.GeneratePrinterCommandsFromXml(this.BindDynamicValuesAsConstants(modifiedXml), ProgrammingLanguage.ZPL, (int)dpi, null, false);
-
-            if (this.NeedsBinding(xmlTemplate)) {
-                if (dataSource == DataSourceType.Database)
-                {
-                    // DB Binding
-                    if (!(data is DatabaseSettings dbSettings))
-                    {
-                        printResult.IsSuccessful = false;
-                        printResult.Message = Properties.Localization.MissingDBSetting;
-                        return printResult;
-                    }
-
-                    var (dataTable, isSuccessful, errorMessage) = this._databaseQuery.ExecuteSQL(dbSettings);
-                    if (!isSuccessful)
-                    {
-                        printResult.Message = errorMessage;
-
-                        return printResult;
-                    }
-
-                    zplPrinterCommands = this.GeneratePrinterCommandsFromXml(modifiedXml, ProgrammingLanguage.ZPL, (int)dpi, dataTable, false);
-                }
-                else if (dataSource == DataSourceType.Json && data != null && !string.IsNullOrEmpty(data.ToString()))
-                {
-                    // Json binding
-                    var (dataSetXml, errorMessage) = this._dataBinder.BindJsonDataToDataSet(data.ToString());
-                    if (!string.IsNullOrEmpty(errorMessage))
-                    {
-                        printResult.Message = errorMessage;
-
-                        return printResult;
-                    }
-
-                    zplPrinterCommands = this.GeneratePrinterCommandsFromXml(modifiedXml, ProgrammingLanguage.ZPL, (int)dpi, dataSetXml, false);
-                }
-                else if (dataSource == DataSourceType.Xml && data != null && !string.IsNullOrEmpty(data.ToString()))
-                {
-                    var dataSet = this._dataBinder.BindXmlDataToDataSet(data.ToString());
-                    zplPrinterCommands = this.GeneratePrinterCommandsFromXml(modifiedXml, ProgrammingLanguage.ZPL, (int)dpi, dataSet, false);
-                }
-            }
-
-            printResult.Message = zplPrinterCommands;
-            printResult.IsSuccessful = true;
-
-            return printResult;
-        }
-
         /// <summary>
         /// Executes command in the target printer
         /// </summary>
@@ -522,7 +259,7 @@
                 case PrintServiceLibrary.CommunicationType.USB:
                     return this.PrintUSB(printerCommands, printerSettings.PrinterName, printerSettings.Copies, waitForResponse);
                 default:
-                    return this._neodynamicWrapper.ExecuteCommand(printerCommands, printerSettings);
+                    throw new NotImplementedException("This type of communication is not supported.");
             }
         }
 
@@ -568,55 +305,6 @@
             var pattern = "DataField=\"([^\"]+)\"";
 
             return Regex.IsMatch(xml, pattern);
-        }
-
-        /// <summary>
-        /// Generates printer commands from XML Label template
-        /// </summary>
-        /// <param name="xml">XML template  containing all label data</param>
-        /// <param name="language">Target language to generate</param>
-        /// <param name="dpi">Target DPI resolution</param>
-        /// <param name="dataSource">Data source for binding</param>
-        /// <param name="usePrintersRAM">Use printer's RAM to load objects?</param>
-        /// <returns>Returns string commands in specified language (e.g. ZPL)</returns>
-        private string GeneratePrinterCommandsFromXml(string xml, PrintServiceLibrary.ProgrammingLanguage language, int dpi, object dataSource, bool usePrintersRAM)
-        {
-            return this._neodynamicWrapper.GeneratePrinterCommandsFromXml(xml, language, dpi, dataSource, usePrintersRAM);
-        }
-
-        /// <summary>
-        /// Uploads fonts used in the XML Label template to the printer
-        /// </summary>
-        /// <param name="printerSettings"><see cref="PrintServiceLibrary.PrinterSettings"/> structure with printer connection details.</param>
-        /// <param name="xmlTemplate">XML Label template containing all label data</param>
-        /// <param name="memoryType">Memory type location where to upload the font</param>
-        /// <returns>Returns modified XML Label template</returns>
-        private string UploadTemplateFontsToPrinter(PrintServiceLibrary.PrinterSettings printerSettings, string xmlTemplate, PrinterMemoryType memoryType)
-        {
-            string zplCommand = string.Empty;
-            var fonts = this._neodynamicWrapper.SetupTemplateFonts(xmlTemplate, out string modifiedXml);
-            var printerMemory = this.ListPrinterMemory(printerSettings, PrinterMemoryType.DRAM);
-
-            foreach (var font in fonts)
-            {
-                if (printerMemory.Contains(string.Format("{0}:{1}.FNT", (char)memoryType, font.ShortName.ToUpper())))
-                {
-                    continue;
-                }
-
-                var path = this.GetSystemFontFileName(font);
-
-                byte[] fontByteArray = File.ReadAllBytes(path);
-                var fontData = BitConverter.ToString(fontByteArray);
-                fontData = fontData.Replace("-", string.Empty);
-
-                zplCommand += string.Format("~DU{0}:{1}.FNT,{2},{3}", (char)memoryType, font.ShortName, fontByteArray.Length, fontData);
-            }
-
-            zplCommand += string.Format("^XA^HW{0}:^XZ", (char)memoryType);
-            this.ExecuteCommand(zplCommand, printerSettings, true);
-
-            return modifiedXml;
         }
 
         /// <summary>
