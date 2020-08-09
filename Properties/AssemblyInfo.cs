@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PrintServiceLib")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Print Service Library")]
+[assembly: AssemblyDescription("Provides easy API to printer connected to any sort of connection type")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PrintServiceLib")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyProduct("Print Service Library")]
+[assembly: AssemblyCopyright("Copyright © 2020 Martin Fryml")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
