@@ -4,7 +4,7 @@
 ![version](https://img.shields.io/badge/version-1.0-blue) 
 [![Build Status](https://travis-ci.com/Bukk94/PrintServiceLibrary.svg?token=XTeWt6KEyExzbH1iNFWD&branch=master)](https://travis-ci.com/Bukk94/PrintServiceLibrary)
 
-This library servers as an interface into printer's communication. 
+This library serves as an interface into a printer's communication. 
 The user can communicate with various connection interfaces using a single API interface.
 
 API can communicate using:
